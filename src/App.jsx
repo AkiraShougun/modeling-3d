@@ -33,21 +33,39 @@ const Sphere = () => {
   )
 }
 
+const Star = () => {
+  const max = 10
+  const min = -10
+  return (
+    <mesh scale={[0.1,0.1,0.1]} position={[Math.floor(Math.random() * (max - min + 1)) + min,Math.floor(Math.random() * (max - min + 1)) + min,Math.floor(Math.random() * (max - min + 1)) + min]}>
+      <sphereGeometry/>
+      <meshPhongMaterial color={"white"}/>
+    </mesh>
+  )
+}
+
+
 const Light = () => {
   const dirLight = useRef();
   useHelper(dirLight, SpotLightHelper,1, "cyan");
-  console.log("working")
   return (
     <>
-      <spotLight intensity={30} ref={dirLight} position={[0,5,0]}/>
+      <spotLight intensity={90} ref={dirLight} position={[0,10,0]}/>
     </>
   );
 };
 
-
+const StarArray = () => {
+  const arr = []
+  for (let i=0; i<50; i++){
+    arr.push(<Star/>)
+  }
+  return arr
+}
 
 
 function App() {
+
 
   return (
     <>
@@ -57,6 +75,7 @@ function App() {
           <Light/>
           <Torus/>
           <Sphere/>
+          <StarArray/>
           <OrbitControls/>
           <gridHelper/>
         </Canvas>
