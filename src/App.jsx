@@ -1,8 +1,11 @@
 import { useRef } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import "../src/index.css"
-import {OrbitControls, useHelper} from "@react-three/drei"
-import { SpotLightHelper } from "three"
+import {CubicBezierLine, OrbitControls, useHelper} from "@react-three/drei"
+import { CubeTextureLoader, SpotLightHelper } from "three"
+import img1 from "../public/space-nebula.jpg"
+import img2 from "../public/2.jpg"
+
 
 const Torus = () => {
   const ref = useRef()
@@ -19,6 +22,20 @@ const Torus = () => {
   )
 }
 
+const SkyBox = () => {
+  const { scene } = useThree();
+  const loader = new CubeTextureLoader();
+  const texture = loader.load([
+    img2,
+    img2,
+    img2,
+    img2,
+    img2,
+    img2
+  ]);
+  scene.background = texture;
+  return null;
+}
 
 const Sphere = () => {
   const ref2 = useRef()
@@ -57,15 +74,15 @@ const Light = () => {
 
 const StarArray = () => {
   const arr = []
-  for (let i=0; i<50; i++){
+  for (let i=0; i<80; i++){
     arr.push(<Star/>)
   }
   return arr
 }
 
 
-function App() {
 
+function App() {
 
   return (
     <>
@@ -76,6 +93,8 @@ function App() {
           <Torus/>
           <Sphere/>
           <StarArray/>
+          <SkyBox/>
+          <CubicBezierLine start = {[0,0,2]} end = {[0,5,10]} midA = {[0,8,0]} midB = {[-9,0,5]} color="cyan"/>
           <OrbitControls/>
           <gridHelper/>
         </Canvas>
